@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RealEstateApp.ViewModels"
+             xmlns:models="clr-namespace:RealEstateApp.Models"
+             xmlns:fa="clr-namespace:FontAwesome"
+             x:Class="RealEstateApp.Views.PropertyListPage"
+             x:DataType="vm:PropertyListPageViewModel"
+             Title="PropertyListPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"  />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView Command="{Binding GetPropertiesCommand}"
+                 IsRefreshing="{Binding IsRefreshing}">
+        
+        <CollectionView ItemsSource="{Binding Properties}"
+                        BackgroundColor="LightGray"
+                        SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Property">
+                    <Grid Padding="5">
+                        <Frame HeightRequest="200" HasShadow="True">
+                            <Grid Margin="0,0,0,20" Padding="0" BackgroundColor="White" ColumnDefinitions="Auto, *">
+                                <Image
+                                    Grid.Column="0"
+                                    Margin="0,0,10,0"
+                                    Aspect="AspectFit"
+                                    HeightRequest="120"
+                                    HorizontalOptions="Start"
+                                    Source="{Binding MainImageUrl}" />
+                                <Grid Grid.Column="1" Margin="0,0,10,0" RowDefinitions="Auto, Auto, Auto, Auto">
+                                    <Label
+                                        Grid.Row="0"
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        LineBreakMode="TailTruncation"
+                                        Text="{Binding Address}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="13"
+                                        LineBreakMode="NoWrap"
+                                        Text="{Binding Price, StringFormat='{0:C0}'}" />
+                                    <Grid Grid.Row="2" ColumnDefinitions="auto, auto, auto, auto, auto, auto">
+                                        <Label
+                                            Grid.Column="0"
+                                            FontSize="15"
+                                            FontFamily="FA-solid"
+                                            Text="{x:Static fa:IconFont.Bed}"/>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="13"
+                                            Text="{Binding Beds}" />
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="15"
+                                            FontFamily="FA-solid"
+                                            Text="{x:Static fa:IconFont.Bath}"/>
+                                        <Label
+                                            Grid.Column="3"
+                                            FontSize="13"
+                                            Text="{Binding Baths}" />
+                                        <Label
+                                            Grid.Column="4"
+                                            FontSize="15"
+                                            FontFamily="FA-solid"
+                                            Text="{x:Static fa:IconFont.Parking}"/>
+                                        <Label
+                                            Grid.Column="5"
+                                            FontSize="13"
+                                            Text="{Binding Parking}" />
+                                    </Grid>
+                                    <Label
+                                        Grid.Row="3"
+                                        FontSize="13"
+                                        Text="{Binding LandSize, StringFormat='Land Size: {0} &#x33a1;'}" />
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </RefreshView>
+
+</ContentPage>

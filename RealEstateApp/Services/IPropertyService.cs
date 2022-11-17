@@ -1,8 +1,8 @@
 ﻿using RealEstateApp.Models;
 
-namespace RealEstateApp.Repositories
+namespace RealEstateApp.Services
 {
-    public interface IRepository
+    public interface IPropertyService
     {
         List<Agent> GetAgents();
         List<Property> GetProperties();

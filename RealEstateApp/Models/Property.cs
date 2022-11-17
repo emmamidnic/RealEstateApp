@@ -13,6 +13,9 @@ namespace RealEstateApp.Models
             ImageUrls = new List<string>();
         }
 
+        //string _name;
+        //public string Name { get => _name; set { SetProperty(ref _name, value); } }
+
         public string Id { get; set; }
         public string Address { get; set; }
         public int? Price { get; set; }
