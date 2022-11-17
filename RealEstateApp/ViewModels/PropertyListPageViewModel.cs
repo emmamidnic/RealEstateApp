@@ -1,5 +1,6 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using RealEstateApp.Views;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -7,7 +8,7 @@ using System.Windows.Input;
 namespace RealEstateApp.ViewModels;
 public class PropertyListPageViewModel : BaseViewModel
 {
-    public ObservableCollection<Property> Properties { get; } = new();
+    public ObservableCollection<PropertyListItem> PropertiesCollection { get; } = new();
 
     private readonly IPropertyService service;
 
@@ -37,11 +38,11 @@ public class PropertyListPageViewModel : BaseViewModel
 
             List<Property> properties = service.GetProperties();
 
-            if (Properties.Count != 0)
-                Properties.Clear();
+            if (PropertiesCollection.Count != 0)
+                PropertiesCollection.Clear();
 
-            foreach (var property in properties)
-                Properties.Add(property);
+            foreach (Property property in properties)
+                PropertiesCollection.Add(new PropertyListItem(property));
 
         }
         catch (Exception ex)
@@ -54,5 +55,18 @@ public class PropertyListPageViewModel : BaseViewModel
             IsBusy = false;
             IsRefreshing = false;
         }
+    }
+
+    private Command goToDetailsCommand;
+    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command<Property>(async (property) => await GoToDetails(property));
+    async Task GoToDetails(Property property)
+    {
+        if (property == null)
+            return;
+
+        await Shell.Current.GoToAsync(nameof(PropertyDetailPage), true, new Dictionary<string, object>
+        {
+            {"MyProperty", property }
+        });
     }
 }
