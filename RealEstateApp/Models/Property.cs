@@ -2,6 +2,9 @@
 // Install-Package PropertyChanged.Fody
 // Tilføj attribute:  [AddINotifyPropertyChangedInterface]
 
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace RealEstateApp.Models
 {
     public class Property
@@ -19,7 +22,10 @@ namespace RealEstateApp.Models
         public string Id { get; set; }
         public string Address { get; set; }
         public int? Price { get; set; }
-        public string Description { get; set; }
+
+        string description;
+        public string Description { get => description; set { SetProperty(ref description, value); } }
+
         public int? Beds { get; set; }
         public int? Baths { get; set; }
         public int? Parking { get; set; }
@@ -30,5 +36,29 @@ namespace RealEstateApp.Models
         public double? Longitude { get; set; }
 
         public string MainImageUrl => ImageUrls?.FirstOrDefault() ?? GlobalSettings.Instance.NoImageUrl;
+
+        #region INotifyPropertyChanged
+        protected bool SetProperty<T>(ref T backingStore, T value,
+                         [CallerMemberName] string propertyName = "", Action onChanged = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return false;
+
+            backingStore = value;
+            onChanged?.Invoke();
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            var changed = PropertyChanged;
+            if (changed == null)
+                return;
+
+            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

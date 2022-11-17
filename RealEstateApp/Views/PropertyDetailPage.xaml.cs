@@ -1,9 +1,12 @@
+using RealEstateApp.ViewModels;
+
 namespace RealEstateApp.Views;
 
 public partial class PropertyDetailPage : ContentPage
 {
-	public PropertyDetailPage()
+	public PropertyDetailPage(PropertyDetailPageViewModel vm)
 	{
 		InitializeComponent();
+		BindingContext = vm;
 	}
 }

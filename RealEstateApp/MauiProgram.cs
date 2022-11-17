@@ -24,6 +24,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<PropertyListPage>();
         builder.Services.AddSingleton<PropertyListPageViewModel>();
 
+        builder.Services.AddTransient<PropertyDetailPage>();
+        builder.Services.AddTransient<PropertyDetailPageViewModel>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

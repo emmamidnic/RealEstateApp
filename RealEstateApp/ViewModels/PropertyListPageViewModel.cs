@@ -58,15 +58,15 @@ public class PropertyListPageViewModel : BaseViewModel
     }
 
     private Command goToDetailsCommand;
-    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command<Property>(async (property) => await GoToDetails(property));
-    async Task GoToDetails(Property property)
+    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command<PropertyListItem>(async (property) => await GoToDetails(property));
+    async Task GoToDetails(PropertyListItem propertyListItem)
     {
-        if (property == null)
+        if (propertyListItem == null)
             return;
 
         await Shell.Current.GoToAsync(nameof(PropertyDetailPage), true, new Dictionary<string, object>
         {
-            {"MyProperty", property }
+            {"MyPropertyListItem", propertyListItem }
         });
     }
 }
