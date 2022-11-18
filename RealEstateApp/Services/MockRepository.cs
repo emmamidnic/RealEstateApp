@@ -5,24 +5,17 @@ namespace RealEstateApp.Repositories
 {
     public class MockRepository : IPropertyService
     {
-        private List<Agent> _agents;
-        private List<Property> _properties;
-
         public MockRepository()
         {
             LoadProperties();
             LoadAgents();
         }
 
-        public List<Agent> GetAgents()
-        {
-            return _agents;
-        }
+        private List<Agent> _agents;
+        private List<Property> _properties;
 
-        public List<Property> GetProperties()
-        {
-            return _properties;
-        }
+        public List<Agent> GetAgents() => _agents;
+        public List<Property> GetProperties() => _properties;
 
         public void SaveProperty(Property property)
         {
