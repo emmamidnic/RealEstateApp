@@ -69,4 +69,14 @@ public class PropertyListPageViewModel : BaseViewModel
             {"MyPropertyListItem", propertyListItem }
         });
     }
+
+    private Command goToAddPropertyCommand;
+    public ICommand GoToAddPropertyCommand => goToAddPropertyCommand ??= new Command(async () => await GotoAddProperty());
+    async Task GotoAddProperty()
+    {
+        await Shell.Current.GoToAsync($"{nameof(AddEditPropertyPage)}?mode=newproperty", true, new Dictionary<string, object>
+        {
+            {"MyProperty", new Property() }
+        });
+    }
 }

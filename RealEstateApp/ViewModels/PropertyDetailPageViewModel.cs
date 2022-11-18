@@ -1,5 +1,7 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using RealEstateApp.Views;
+using System.Windows.Input;
 
 namespace RealEstateApp.ViewModels;
 
@@ -11,8 +13,6 @@ public class PropertyDetailPageViewModel : BaseViewModel
     {
         this.service = service;
     }
-
-
 
     Property property;
     public Property Property { get => property; set { SetProperty(ref property, value); } }
@@ -32,5 +32,15 @@ public class PropertyDetailPageViewModel : BaseViewModel
             Property = propertyListItem.Property;
             Agent = service.GetAgents().FirstOrDefault(x => x.Id == Property.AgentId);
         }
+    }
+
+    private Command editPropertyCommand;
+    public ICommand EditPropertyCommand => editPropertyCommand ??= new Command(async () => await GotoEditProperty());
+    async Task GotoEditProperty()
+    {
+        await Shell.Current.GoToAsync(nameof(AddEditPropertyPage), true, new Dictionary<string, object>
+        {
+            {"MyProperty", Property}
+        });
     }
 }

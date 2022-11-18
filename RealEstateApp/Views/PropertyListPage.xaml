@@ -9,7 +9,7 @@
              Title="PropertyListPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add"  />
+        <ToolbarItem Text="Add" Command="{Binding GoToAddPropertyCommand}" />
     </ContentPage.ToolbarItems>
 
     <RefreshView Command="{Binding GetPropertiesCommand}"

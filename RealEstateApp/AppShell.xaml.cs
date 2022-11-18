@@ -9,5 +9,6 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
 		Routing.RegisterRoute(nameof(PropertyDetailPage), typeof(PropertyDetailPage));
-	}
+        Routing.RegisterRoute(nameof(AddEditPropertyPage), typeof(AddEditPropertyPage));
+    }
 }

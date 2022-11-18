@@ -8,31 +8,42 @@ namespace RealEstateApp.Repositories
         private List<Agent> _agents;
         private List<Property> _properties;
 
+        public MockRepository()
+        {
+            LoadProperties();
+            LoadAgents();
+        }
+
         public List<Agent> GetAgents()
         {
-            _agents = new List<Agent>
-            {
-                new Agent
-                {
-                    Id = "agent_2",
-                    Email = "sarah@realestate.com",
-                    Name = "Sarah Brown",
-                    Phone = "555 675 1456",
-                    ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_2.png"
-                },
-                new Agent
-                {
-                    Id = "agent_1",
-                    Email = "bob@realestate.com",
-                    Name = "Bob Smith",
-                    Phone = "555 123 1234",
-                    ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_1.png"
-                }
-            };
             return _agents;
         }
 
         public List<Property> GetProperties()
+        {
+            return _properties;
+        }
+
+        public void SaveProperty(Property property)
+        {
+            if (property.Id == null) throw new NullReferenceException("Property.Id cannot be null");
+
+            var existing = _properties.FirstOrDefault(x => x.Id == property.Id);
+
+            if (existing == null)
+            {
+                _properties.Add(property);
+            }
+            else
+            {
+                var existingIndex = _properties.IndexOf(existing);
+
+                _properties[existingIndex] = property;
+            }
+        }
+
+
+        private void LoadProperties()
         {
             _properties = new List<Property>
             {
@@ -80,27 +91,30 @@ namespace RealEstateApp.Repositories
                     Latitude = -33.732073, Longitude = 151.297265
                 }
             };
-            return _properties;
         }
 
-        public void SaveProperty(Property property)
+        private void LoadAgents()
         {
-            if (property.Id == null) throw new NullReferenceException("Property.Id cannot be null");
-
-            var existing = _properties.FirstOrDefault(x => x.Id == property.Id);
-
-            if (existing == null)
+            _agents = new List<Agent>
             {
-                _properties.Add(property);
-            }
-            else
-            {
-                var existingIndex = _properties.IndexOf(existing);
-
-                _properties[existingIndex] = property;
-            }
+                new Agent
+                {
+                    Id = "agent_2",
+                    Email = "sarah@realestate.com",
+                    Name = "Sarah Brown",
+                    Phone = "555 675 1456",
+                    ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_2.png"
+                },
+                new Agent
+                {
+                    Id = "agent_1",
+                    Email = "bob@realestate.com",
+                    Name = "Bob Smith",
+                    Phone = "555 123 1234",
+                    ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_1.png"
+                }
+            };
         }
-
 
         private List<string> GetPropertyImageUrls(int index)
         {
@@ -113,3 +127,4 @@ namespace RealEstateApp.Repositories
         }
     }
 }
+

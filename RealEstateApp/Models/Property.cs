@@ -22,10 +22,7 @@ namespace RealEstateApp.Models
         public string Id { get; set; }
         public string Address { get; set; }
         public int? Price { get; set; }
-
-        string description;
-        public string Description { get => description; set { SetProperty(ref description, value); } }
-
+        public string Description { get; set; }
         public int? Beds { get; set; }
         public int? Baths { get; set; }
         public int? Parking { get; set; }
