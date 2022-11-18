@@ -9,11 +9,10 @@
              Title="PropertyListPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding GoToAddPropertyCommand}" />
+        <ToolbarItem Text="Add"  />
     </ContentPage.ToolbarItems>
 
-    <RefreshView Command="{Binding GetPropertiesCommand}"
-                 IsRefreshing="{Binding IsRefreshing}">
+    <RefreshView >
 
         <CollectionView ItemsSource="{Binding PropertiesCollection}"
                         BackgroundColor="LightGray"
