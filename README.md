@@ -1,11 +1,10 @@
-# Opgave 1.4 - RealEstateApp projektet, komplet og klar til Essentials
-Denne opgave går ud på at lave en ejendomsmægler app kaldet RealEstateApp. Den laves i Xamarin.Forms og har to formål: Træning i grundlæggende app-programmering samt at have et projekt, hvor det giver god mening at indbygge forskellige sensorer.  App'en har følgende skærmbilleder:
+# Opgave 2.1 - Ændringer
 
-| ![Properties List](images/PropertiesList.png) PropertyListPage | ![Detail View](images/DetailView.png) PropertyDetailPage | ![Edit View](images/EditView.png) AddEditPage (EDIT) |  
-|---|---|---|
-|---|---|---|
-| ![Add](images/Add.png) AddEditPage (ADD) | ![Flyout Menu](images/FlyoutMenu.png) MenuPage | ![About](images/About.png) AboutPage |  
-|   |   |   |  
-|   |   |   | 
+Udvikleren af RealEstateApp'en blev næsten færdig med at konvertere til MVVM... bortset fra at ingen af knapperne har en funktion!
 
-Denne færdige branch hedder 1.4.Basic og rummer den færdige RealEstateApp klar til at få indbygget forskellige kald til Essentials.
+1. Når app'en starter op, er skærmen blank. Der findes en metode `GetPropertiesAsync()`, der henter data fra MockService, men den bliver åbenbart ikke kørt når der navigeres til PropertyListPage. Gør noget ved det!
+2. Når der laves Pull-to-Refresh, ser det ikke ud som om der indlæses data. Og spinneren bliver ved med at køre rundt. Kan det fixes?
+3. So far so good... men når man klikker på et hus, sendes man ikke til PropertyDetailPage! Hvad mangler der?
+4. Vi vil også genne kunne tilføje et nyt hus. Når der klikkes på Add sker der ingenting. Gør noget ved det!
+5. Ok, nu er vi langt. Lige en sidste ting: Når vi på DetailsPagen trykker på Edit, sker der ingenting. Kan du også ordne det?
+6. Tillykke, du har klaret udfordringerne og har nu en færdig app, som er klar til at blive udvidet med nogle spændende features!
