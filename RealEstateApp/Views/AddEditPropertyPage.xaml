@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:converters="clr-namespace:RealEstateApp.Converters"
-             xmlns:vm="clr-namespace:RealEstateApp.ViewModels"
-             xmlns:models="clr-namespace:RealEstateApp.Models"
-             xmlns:fa="clr-namespace:FontAwesome"
-             x:DataType="vm:AddEditPropertyPageViewModel"
-             x:Class="RealEstateApp.Views.AddEditPropertyPage"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="RealEstateApp.Views.AddEditPropertyPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:RealEstateApp.Converters"
+    xmlns:fa="clr-namespace:FontAwesome"
+    xmlns:models="clr-namespace:RealEstateApp.Models"
+    xmlns:vm="clr-namespace:RealEstateApp.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="vm:AddEditPropertyPageViewModel">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Command="{Binding CancelSaveCommand}"/>
-        <ToolbarItem Text="Save" Command="{Binding SavePropertyCommand}"/>
+        <ToolbarItem Command="{Binding CancelSaveCommand}" Text="Cancel" />
+        <ToolbarItem Command="{Binding SavePropertyCommand}" Text="Save" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -26,7 +27,7 @@
                     <Label FontSize="Medium" Text="{Static fa:IconFont.Home}">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{x:Static fa:IconFont.Home}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{x:Static fa:IconFont.Home}" />
                                 <Span Text=" " />
                                 <Span Text="Address*" />
                             </FormattedString>
@@ -34,22 +35,21 @@
                     </Label>
                     <Entry FontSize="Medium" Text="{Binding Property.Address}" />
 
-                    <Label FontSize="Medium" FontFamily="FA-solid">
+                    <Label FontFamily="FA-solid" FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Static fa:IconFont.Tag}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.Tag}" />
                                 <Span Text=" " />
                                 <Span Text="Price*" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Entry FontSize="Medium"
-                           Text="{Binding Property.Price, Converter={converters:NullableIntConverter}}" />
+                    <Entry FontSize="Medium" Text="{Binding Property.Price, Converter={converters:NullableIntConverter}}" />
 
                     <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Static fa:IconFont.Bed}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.Bed}" />
                                 <Span Text=" " />
                                 <Span Text="Bedrooms*" />
                             </FormattedString>
@@ -64,7 +64,7 @@
                     <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Static fa:IconFont.Bath}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.Bath}" />
                                 <Span Text=" " />
                                 <Span Text="Bathroom" />
                             </FormattedString>
@@ -79,7 +79,7 @@
                     <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Static fa:IconFont.Parking}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.Parking}" />
                                 <Span Text=" " />
                                 <Span Text="Parking" />
                             </FormattedString>
@@ -94,11 +94,11 @@
                     <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Static fa:IconFont.Square}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.Square}" />
                                 <Span Text=" " />
-                                <Span Text="Land Size"/>
-                                <Span Text=" "/>
-                                <Span Text="(&#x33a1;)"/>
+                                <Span Text="Land Size" />
+                                <Span Text=" " />
+                                <Span Text="(&#x33a1;)" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -111,7 +111,7 @@
                     <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Static fa:IconFont.FileAlt}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.FileAlt}" />
                                 <Span Text=" " />
                                 <Span Text="Description" />
                             </FormattedString>
@@ -119,17 +119,17 @@
                     </Label>
                     <Editor
                         Margin="0"
-                        FontSize="Medium"
                         AutoSize="TextChanges"
-                        Keyboard="Text"
+                        FontSize="Medium"
                         IsSpellCheckEnabled="False"
                         IsTextPredictionEnabled="False"
+                        Keyboard="Text"
                         Text="{Binding Property.Description}" />
 
                     <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="{Static fa:IconFont.UserTie}" FontFamily="FA-solid"/>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.UserTie}" />
                                 <Span Text=" " />
                                 <Span Text="Agent*" />
                             </FormattedString>
