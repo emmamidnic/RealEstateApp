@@ -24,7 +24,7 @@
             <ScrollView VerticalOptions="FillAndExpand">
                 <StackLayout Padding="15" Spacing="20">
 
-                    <Label FontSize="Medium" Text="{Static fa:IconFont.Home}">
+                    <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span FontFamily="FA-solid" Text="{x:Static fa:IconFont.Home}" />
