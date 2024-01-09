@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:fa="clr-namespace:FontAwesome"
-             xmlns:vm="clr-namespace:RealEstateApp.ViewModels"
-             x:Class="RealEstateApp.Views.PropertyDetailPage"
-             x:DataType="vm:PropertyDetailPageViewModel"
-             Title="{Binding Property.Address}">
+<ContentPage
+    x:Class="RealEstateApp.Views.PropertyDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fa="clr-namespace:FontAwesome"
+    xmlns:vm="clr-namespace:RealEstateApp.ViewModels"
+    Title="{Binding Property.Address}"
+    x:DataType="vm:PropertyDetailPageViewModel">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit" Command="{Binding EditPropertyCommand}" />
+        <ToolbarItem Command="{Binding EditPropertyCommand}" Text="Edit" />
     </ContentPage.ToolbarItems>
 
-    <ScrollView >
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
-              RowSpacing="10"
-              Padding="15">
+    <ScrollView>
+        <Grid
+            Padding="15"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+            RowSpacing="10">
             <Image
                 Grid.Row="0"
                 Margin="-10,-10,-10,0"
@@ -32,12 +34,14 @@
                 FontSize="16"
                 LineBreakMode="NoWrap"
                 Text="{Binding Property.Address}" />
-            <Grid Grid.Row="3" ColumnSpacing="10"
-                  ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+            <Grid
+                Grid.Row="3"
+                ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                ColumnSpacing="10">
                 <Label
                     Grid.Column="0"
-                    FontSize="16"
                     FontFamily="FA-solid"
+                    FontSize="16"
                     Text="{Static fa:IconFont.Bed}"
                     VerticalOptions="Center" />
                 <Label
@@ -46,8 +50,8 @@
                     Text="{Binding Property.Beds}" />
                 <Label
                     Grid.Column="2"
-                    FontSize="16"
                     FontFamily="FA-solid"
+                    FontSize="16"
                     Text="{Static fa:IconFont.Bath}"
                     VerticalOptions="Center" />
                 <Label
@@ -56,8 +60,8 @@
                     Text="{Binding Property.Baths}" />
                 <Label
                     Grid.Column="4"
-                    FontSize="16"
                     FontFamily="FA-solid"
+                    FontSize="16"
                     Text="{Static fa:IconFont.Parking}"
                     VerticalOptions="Center" />
                 <Label
@@ -91,9 +95,10 @@
                     Source="{Binding Agent.ImageUrl}"
                     VerticalOptions="Start"
                     WidthRequest="100" />
-                <Grid Grid.Column="1" 
-                      Margin="10"
-                      RowDefinitions="Auto,Auto,Auto">
+                <Grid
+                    Grid.Column="1"
+                    Margin="10"
+                    RowDefinitions="Auto,Auto,Auto">
                     <Label
                         Grid.Row="0"
                         FontAttributes="Bold"
