@@ -25,8 +25,8 @@ public class PropertyListPageViewModel : BaseViewModel
         set => SetProperty(ref isRefreshing, value);
     }
 
-    //private Command getPropertiesCommand;
-    //public ICommand GetPropertiesCommand => getPropertiesCommand ??= new Command(async () => await GetPropertiesAsync());
+    private Command getPropertiesCommand;
+    public ICommand GetPropertiesCommand => getPropertiesCommand ??= new Command(async () => await GetPropertiesAsync());
 
     async Task GetPropertiesAsync()
     {
@@ -57,7 +57,8 @@ public class PropertyListPageViewModel : BaseViewModel
         }
     }
 
-
+    private Command goToDetailsCommand;
+    public ICommand GoToDetailsCommand => goToDetailsCommand ??= new Command(async (object propertyListItem) => await GoToDetails(propertyListItem as PropertyListItem));
     async Task GoToDetails(PropertyListItem propertyListItem)
     {
         if (propertyListItem == null)
