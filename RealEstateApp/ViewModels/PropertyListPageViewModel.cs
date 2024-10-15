@@ -1,14 +1,20 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
 using RealEstateApp.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 
+
 namespace RealEstateApp.ViewModels;
 public class PropertyListPageViewModel : BaseViewModel
 {
+    private Location? _actualLocation;
+
+    public ObservableCollection<PropertyListItem> SortedPropertiesCollection { get; } = new();
     public ObservableCollection<PropertyListItem> PropertiesCollection { get; } = new();
+
 
     private readonly IPropertyService service;
 
@@ -42,8 +48,26 @@ public class PropertyListPageViewModel : BaseViewModel
                 PropertiesCollection.Clear();
 
             foreach (Property property in properties)
-                PropertiesCollection.Add(new PropertyListItem(property));
+            {
+                Location propertyLocation = new(property.Latitude!.Value, property.Longitude!.Value);
 
+                if (_actualLocation is null)
+                    _actualLocation = await Geolocation.GetLastKnownLocationAsync();
+
+                double distance = _actualLocation.CalculateDistance(propertyLocation, DistanceUnits.Kilometers);
+
+                SortedPropertiesCollection.Add(new PropertyListItem(property)
+                {
+                    Distance = distance
+                });
+            }
+
+            List<PropertyListItem> sortedPropertyListItems = SortedPropertiesCollection.OrderBy(p => p.Distance).ToList();
+
+            foreach (var item in sortedPropertyListItems)
+            {
+                PropertiesCollection.Add(item);
+            }
         }
         catch (Exception ex)
         {
@@ -78,5 +102,43 @@ public class PropertyListPageViewModel : BaseViewModel
         {
             {"MyProperty", new Property() }
         });
+    }
+
+    private Command sortAsyncCommand;
+    public ICommand SortAsyncCommand => sortAsyncCommand ??= new Command(async () => await SortAsync() );
+
+    private async Task SortAsync()
+    {
+        try
+        {
+            _actualLocation = await Geolocation.GetLocationAsync();
+            if (_actualLocation is null)
+            {
+                _actualLocation = await Geolocation.GetLastKnownLocationAsync();
+            };
+
+            await GetPropertiesAsync();
+        }
+
+        catch (FeatureNotSupportedException fnsEx)
+        {
+            Debug.WriteLine($"Feature not supported: {fnsEx.Message}");
+            await Shell.Current.DisplayAlert("Error!", fnsEx.Message, "OK");
+        }
+        catch (FeatureNotEnabledException fneEx)
+        {
+            Debug.WriteLine($"Feature not enabled: {fneEx.Message}");
+            await Shell.Current.DisplayAlert("Error!", fneEx.Message, "OK");
+        }
+        catch (PermissionException pEx)
+        {
+            Debug.WriteLine($"Permission not granted: {pEx.Message}");
+            await Shell.Current.DisplayAlert("Error!", pEx.Message, "OK");
+        }
+        catch (Exception e)
+        {
+
+            await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+        }
     }
 }

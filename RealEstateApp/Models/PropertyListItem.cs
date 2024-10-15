@@ -21,6 +21,17 @@ public class PropertyListItem : INotifyPropertyChanged
         }
     }
 
+    private double _distance;
+    public double Distance 
+    {
+        get => _distance;
+        set
+        {
+            _distance = value;
+            OnPropertyChanged();
+        }
+    }
+
 
     public event PropertyChangedEventHandler PropertyChanged;
 
