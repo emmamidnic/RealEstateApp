@@ -1,8 +1,8 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Windows.Input;
-
 namespace RealEstateApp.ViewModels;
 
 [QueryProperty(nameof(Mode), "mode")]
@@ -122,6 +122,7 @@ public class AddEditPropertyPageViewModel : BaseViewModel
             _property.Longitude = location.Longitude;
             _property.Latitude = location.Latitude;
             OnPropertyChanged(nameof(Property));
+            await UpdateAddress(location);
         }
         // Catch one of the following exceptions:
         //   FeatureNotSupportedException
@@ -134,6 +135,52 @@ public class AddEditPropertyPageViewModel : BaseViewModel
         finally
         {
             _isCheckingLocation = false;
+        }
+    }
+
+    public async Task UpdateAddress(Location location)
+    {
+        double lat = location.Latitude;
+        double lng = location.Longitude;
+        IEnumerable<Placemark> placemarks = await Geocoding.GetPlacemarksAsync(lat, lng);
+        Placemark placemark = placemarks?.FirstOrDefault();
+
+        if (placemark != null)
+        {
+            string address = $"{placemark.Thoroughfare}, {placemark.Locality}, {placemark.AdminArea}, {placemark.PostalCode}, {placemark.CountryName}";
+
+            _property.Address = address;
+            OnPropertyChanged(nameof(Property));
+            
+        }
+        else
+        {
+            _property.Address = "Address not found";
+        }
+
+    }
+
+    private Command updateLocationCommand;
+    public ICommand UpdateLocationCommand => updateLocationCommand ??= new Command(async () => await UpdateLocation());
+    public async Task UpdateLocation()
+    {
+        try
+        {
+            if (Property.Address is null) 
+            {
+                await Application.Current.MainPage.DisplayAlert("Error!", "Please fill out address!", "Cancel");
+            }
+            var locations = await Geocoding.GetLocationsAsync(Property.Address);
+            var location = locations?.FirstOrDefault();
+
+
+            _property.Longitude = location.Longitude;
+            _property.Latitude = location.Latitude;
+            OnPropertyChanged(nameof(Property));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
         }
     }
 

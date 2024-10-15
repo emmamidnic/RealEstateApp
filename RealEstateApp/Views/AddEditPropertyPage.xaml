@@ -33,7 +33,7 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Entry FontSize="Medium" Text="{Binding Property.Address}" />
+                    <Entry x:Name="addressEntry" FontSize="Medium" Text="{Binding Property.Address}" />
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
@@ -43,18 +43,27 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Grid ColumnDefinitions="*,*,*">
+                    <Grid ColumnDefinitions="*,*,*,*">
                         <Label Grid.Column="0" Text="{Binding Property.Latitude}" />
                         <Label Grid.Column="1" Text="{Binding Property.Longitude}" />
                         <Button
                             Grid.Column="2"
                             BackgroundColor="Transparent"
                             Command="{Binding GetCurrentLocationCommand}"
-                            HeightRequest="70"
+                            HeightRequest="50"
                             HorizontalOptions="Center"
                             ImageSource="thumbtack.png"
                             VerticalOptions="Center"
-                            WidthRequest="70" />
+                            WidthRequest="50" />
+                        <Button
+                            Grid.Column="3"
+                            BackgroundColor="Transparent"
+                            Command="{Binding UpdateLocationCommand}" 
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            ImageSource="home.png"
+                            VerticalOptions="Center"
+                            WidthRequest="50" />
                     </Grid>
                     <Label FontFamily="FA-solid" FontSize="Medium">
                         <Label.FormattedText>
