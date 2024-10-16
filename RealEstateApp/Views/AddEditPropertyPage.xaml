@@ -10,6 +10,7 @@
     Title="{Binding Title}"
     x:DataType="vm:AddEditPropertyPageViewModel">
 
+ 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding CancelSaveCommand}" Text="Cancel" />
         <ToolbarItem Command="{Binding SavePropertyCommand}" Text="Save" />
@@ -17,6 +18,17 @@
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="#E8E8E8">
+            <!-- Battery Warning Label -->
+            <Label
+                x:Name="BatteryWarningLabel"
+                BackgroundColor="{Binding BatteryStatus, Converter={converters:ColorConverter}}"
+                TextColor="White"
+                FontSize="Medium"
+                Padding="10"
+                Text="{Binding BatteryWarningMessage}"
+                IsVisible="{Binding IsBatteryWarningVisible}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start" />
             <Label
                 BackgroundColor="{Binding StatusColor}"
                 IsVisible="{Binding StatusMessage, Converter={converters:StringBoolConverter}}"

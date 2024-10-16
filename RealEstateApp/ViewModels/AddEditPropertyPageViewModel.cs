@@ -298,20 +298,47 @@ public class AddEditPropertyPageViewModel : BaseViewModel
     #endregion
 
     #region OPGAVE 3.7
+    private string batteryWarningMessage;
+    public string BatteryWarningMessage
+    {
+        get => batteryWarningMessage;
+        set => SetProperty(ref batteryWarningMessage, value);
+    }
+    // New property for the battery status
+    private Tuple<BatteryState, double, bool> batteryStatus;
+    public Tuple<BatteryState, double, bool> BatteryStatus
+    {
+        get => batteryStatus;
+        set => SetProperty(ref batteryStatus, value);
+    }
+
+    private bool isBatteryWarningVisible;
+    public bool IsBatteryWarningVisible
+    {
+        get => isBatteryWarningVisible;
+        set => SetProperty(ref isBatteryWarningVisible, value);
+    }
 
     private void OnBatteryInfoChanged(object sender, BatteryInfoChangedEventArgs e)
     {
         CheckBatteryLevel();
     }
 
-    private async void CheckBatteryLevel()
+    // Method to check the current battery level and show an alert if below 20%
+    private void CheckBatteryLevel()
     {
-        if (battery.State == BatteryState.NotCharging && battery.ChargeLevel < 0.2)
+        bool isEnergySaverOn = battery.EnergySaverStatus == EnergySaverStatus.On;
+        BatteryStatus = new Tuple<BatteryState, double, bool>(battery.State, battery.ChargeLevel, isEnergySaverOn);
+        if (battery.ChargeLevel < 0.2)
         {
-            await Shell.Current.DisplayAlert("Low Battery", "Your battery is below 20%. Please charge your device.", "OK");
+            BatteryWarningMessage = "Warning: Battery level is below 20%. Please charge your device.";
+            IsBatteryWarningVisible = true;
+        }
+        else
+        {
+            IsBatteryWarningVisible = false;
         }
     }
-
 
     #endregion
 }

@@ -66,10 +66,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Converters\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiAsset Include="Helpers\IconFont.cs" />
 	</ItemGroup>
 
