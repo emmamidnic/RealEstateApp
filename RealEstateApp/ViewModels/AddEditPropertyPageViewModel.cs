@@ -11,10 +11,28 @@ public class AddEditPropertyPageViewModel : BaseViewModel
 {
     readonly IPropertyService service;
 
-    public AddEditPropertyPageViewModel(IPropertyService service)
+    public AddEditPropertyPageViewModel(IPropertyService service, IConnectivity connectivity)
     {
         this.service = service;
         Agents = new ObservableCollection<Agent>(service.GetAgents());
+
+        this.connectivity = connectivity;
+        connectivity.ConnectivityChanged += OnConnectivityChanged;
+    }
+
+    public bool IsOnline => connectivity.NetworkAccess == NetworkAccess.Internet;
+    private async void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(IsOnline));
+        if (IsOnline == false)
+        {
+            await Shell.Current.DisplayAlert("Offline", "You must be online to use geocoding", "OK");
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert("Online", "You are now online and can use geocoding", "OK");
+        }
+
     }
 
     public string Mode { get; set; }
@@ -22,6 +40,7 @@ public class AddEditPropertyPageViewModel : BaseViewModel
     #region PROPERTIES
     public ObservableCollection<Agent> Agents { get; }
 
+    private IConnectivity connectivity;
     private Property _property;
     public Property Property
     {
