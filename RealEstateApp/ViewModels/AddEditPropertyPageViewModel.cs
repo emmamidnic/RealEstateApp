@@ -227,62 +227,34 @@ public class AddEditPropertyPageViewModel : BaseViewModel
     #region OPGAVE 3.6
 
     private bool isSpeechPlaying;
+    public bool IsSpeechPlaying
+    { get { return isSpeechPlaying; }
+      set { SetProperty(ref isSpeechPlaying, value); }
+    }
+
     private CancellationTokenSource cancellationTokenSource;
 
     private Command textToSpeechCommand;
     private Command cancelSpeechCommand;
-    public ICommand TextToSpeechCommand => textToSpeechCommand ??= new Command(ExecuteTextToSpeech);
-    public ICommand CancelSpeechCommand => cancelSpeechCommand ??= new Command(ExecuteCancelSpeech, CanExecuteCancelSpeech);
+    public ICommand TextToSpeechCommand => textToSpeechCommand ??= new Command(async () => await ExecuteTextToSpeech());
+    public ICommand CancelSpeechCommand => cancelSpeechCommand ??= new Command(ExecuteCancelSpeech);
 
-
-    public bool IsSpeechPlaying
+    public async Task ExecuteTextToSpeech()
     {
-        get => isSpeechPlaying;
-        set
-        {
-            isSpeechPlaying = value;
-            OnPropertyChanged();
-            // Update CancelSpeechCommand execution status
-            ((Command)CancelSpeechCommand).ChangeCanExecute();
-        }
+        IsSpeechPlaying = true;
+        cancellationTokenSource = new CancellationTokenSource();
+        await TextToSpeech.Default.SpeakAsync(Property.Description, cancelToken: cancellationTokenSource.Token);
     }
 
-    private async void ExecuteTextToSpeech()
+    public void ExecuteCancelSpeech()
     {
-        var descriptionText = Property.Description;
+        IsSpeechPlaying = false;
+        if (cancellationTokenSource?.IsCancellationRequested ?? true)
+            return; //If cancellationTokenSource is either null or if cancellation has already been requested, the method does nothing (return).
 
-        if (!string.IsNullOrWhiteSpace(descriptionText))
-        {
-            cancellationTokenSource = new CancellationTokenSource();
-            IsSpeechPlaying = true;
-
-            try
-            {
-                await TextToSpeech.SpeakAsync(descriptionText, cancelToken: cancellationTokenSource.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                // Handle when speech is cancelled
-            }
-            finally
-            {
-                IsSpeechPlaying = false;
-            }
-        }
+        cancellationTokenSource.Cancel();
     }
 
-    private bool CanExecuteCancelSpeech()
-    {
-        return cancellationTokenSource != null && !cancellationTokenSource.IsCancellationRequested;
-    }
-
-    private void ExecuteCancelSpeech()
-    {
-        if (cancellationTokenSource != null && !cancellationTokenSource.IsCancellationRequested)
-        {
-            cancellationTokenSource.Cancel();
-        }
-    }
 
     #endregion
 }

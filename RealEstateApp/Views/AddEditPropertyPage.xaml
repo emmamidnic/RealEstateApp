@@ -156,8 +156,9 @@
                     <Button
                         BackgroundColor="Transparent"
                         Command="{Binding TextToSpeechCommand}"
-                        HeightRequest="50"
+                        HeightRequest="70"
                         HorizontalOptions="Center"
+                        IsVisible="{Binding IsSpeechPlaying, Converter={converters:InverseBoolConverter}}"
                         ImageSource="play.png"
                         VerticalOptions="Center"
                         WidthRequest="50" />
@@ -166,7 +167,7 @@
                     <Button
                         BackgroundColor="Transparent"
                         Command="{Binding CancelSpeechCommand}"
-                        HeightRequest="50"
+                        HeightRequest="70"
                         HorizontalOptions="Center"
                         ImageSource="cancel.png"
                         IsVisible="{Binding IsSpeechPlaying}"
