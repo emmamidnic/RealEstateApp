@@ -104,9 +104,6 @@ public class AddEditPropertyPageViewModel : BaseViewModel
         }
     }
 
-
-
-
     public bool IsValid()
     {
         if (string.IsNullOrEmpty(Property.Address)
