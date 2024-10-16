@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="RealEstateApp.Views.CompassPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fa="clr-namespace:FontAwesome"
+    Title="CompassPage"
+    Shell.PresentationMode="Modal">
+
+    <Grid ColumnDefinitions="*" RowDefinitions="Auto,*,Auto">
+
+        <Label
+            Margin="0,20"
+            FontFamily="FA-solid"
+            FontSize="Large"
+            HorizontalOptions="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Static fa:IconFont.ArrowUp}" />
+                    <Span Text=" " />
+                    <Span Text="{Binding CurrentAspect}" />
+                    <Span Text=" Aspect" />
+                    <Span Text=" " />
+                    <Span Text="{Static fa:IconFont.ArrowUp}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Image
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalOptions="Center"
+            Rotation="{Binding RotationAngle}"
+            Source="compass.png" />
+
+        <Label
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="0,20"
+            HorizontalOptions="Center"
+            Text="{Binding CurrentHeading, StringFormat='Heading {0:N2}'}" />
+    </Grid>
+</ContentPage>

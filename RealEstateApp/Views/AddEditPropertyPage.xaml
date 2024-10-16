@@ -10,7 +10,7 @@
     Title="{Binding Title}"
     x:DataType="vm:AddEditPropertyPageViewModel">
 
- 
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding CancelSaveCommand}" Text="Cancel" />
         <ToolbarItem Command="{Binding SavePropertyCommand}" Text="Save" />
@@ -18,21 +18,31 @@
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="#E8E8E8">
-            <!-- Toggle Button for Flashlight -->
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Padding="10">
+            <!--  Toggle Button for Flashlight  -->
+            <StackLayout
+                Padding="10"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
                 <Label Text="Flashlight" VerticalOptions="Center" />
                 <Switch IsToggled="{Binding IsFlashlightOn}" />
+                <!--  Button to navigate to CompassPage  -->
+                <Button
+                    Command="{Binding GoToCompassCommand}"
+                    CommandParameter="{Binding Property}"
+                    FontFamily="FA-solid"
+                    Text="{x:Static fa:IconFont.DraftingCompass}" />
+
             </StackLayout>
-            <!-- Battery Warning Label -->
+            <!--  Battery Warning Label  -->
             <Label
                 x:Name="BatteryWarningLabel"
-                BackgroundColor="{Binding BatteryStatus, Converter={converters:ColorConverter}}"
-                TextColor="White"
-                FontSize="Medium"
                 Padding="10"
-                Text="{Binding BatteryWarningMessage}"
-                IsVisible="{Binding IsBatteryWarningVisible}"
+                BackgroundColor="{Binding BatteryStatus, Converter={converters:ColorConverter}}"
+                FontSize="Medium"
                 HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding IsBatteryWarningVisible}"
+                Text="{Binding BatteryWarningMessage}"
+                TextColor="White"
                 VerticalOptions="Start" />
             <Label
                 BackgroundColor="{Binding StatusColor}"
@@ -167,8 +177,8 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    
-                    <!--PLAY BUTTON-->
+
+                    <!--  PLAY BUTTON  -->
                     <Button
                         BackgroundColor="Transparent"
                         Command="{Binding TextToSpeechCommand}"
@@ -177,8 +187,8 @@
                         ImageSource="play.png"
                         VerticalOptions="Center"
                         WidthRequest="50" />
-                    
-                    <!--CANCEL BUTTON-->
+
+                    <!--  CANCEL BUTTON  -->
                     <Button
                         BackgroundColor="Transparent"
                         Command="{Binding CancelSpeechCommand}"

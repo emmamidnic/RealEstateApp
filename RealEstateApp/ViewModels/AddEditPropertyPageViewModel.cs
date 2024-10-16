@@ -1,9 +1,11 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using RealEstateApp.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Net;
+using System.Text.Json;
 using System.Windows.Input;
 namespace RealEstateApp.ViewModels;
 
@@ -384,6 +386,22 @@ public class AddEditPropertyPageViewModel : BaseViewModel
         }
     }
 
+
+    #endregion
+
+    #region OPGAVE 4.1
+
+    private Command goToCompassCommand;
+    public ICommand GoToCompassCommand => goToCompassCommand ??= new Command(async () =>
+    {
+        if (Property == null)
+            return;
+
+        await Shell.Current.GoToAsync(nameof(CompassPage), true, new Dictionary<string, object>()
+        {
+            {"MyProperty", Property}
+        });
+    });
 
     #endregion
 }
