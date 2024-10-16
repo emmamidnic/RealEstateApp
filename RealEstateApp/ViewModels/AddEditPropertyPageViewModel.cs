@@ -297,7 +297,7 @@ public class AddEditPropertyPageViewModel : BaseViewModel
 
     #endregion
 
-    #region OPGAVE 3.7
+    #region OPGAVE 3.7 BATTERY MANGLI AT DEBUGGA !!!
     private string batteryWarningMessage;
     public string BatteryWarningMessage
     {
@@ -339,6 +339,51 @@ public class AddEditPropertyPageViewModel : BaseViewModel
             IsBatteryWarningVisible = false;
         }
     }
+
+    #endregion
+
+    #region Opgave 3.7 Flashlight
+    private bool isFlashlightOn;
+
+    private Command toggleFlashlightCommand;
+    public ICommand ToggleFlashlightCommand => toggleFlashlightCommand ??= new Command(async () => await ToggleFlashlight());
+
+    // Property to bind to the Switch in the XAML
+    public bool IsFlashlightOn
+    {
+        get => isFlashlightOn;
+        set
+        {
+            if (SetProperty(ref isFlashlightOn, value))
+            {
+                ToggleFlashlightCommand.Execute(value);
+            }
+        }
+    }
+
+    public async Task ToggleFlashlight()
+    {
+        try
+        {
+            if (isFlashlightOn)
+                await Flashlight.Default.TurnOnAsync();
+            else
+                await Flashlight.Default.TurnOffAsync();
+        }
+        catch (FeatureNotSupportedException ex)
+        {
+            // Handle not supported on device exception
+        }
+        catch (PermissionException ex)
+        {
+            // Handle permission exception
+        }
+        catch (Exception ex)
+        {
+            // Unable to turn on/off flashlight
+        }
+    }
+
 
     #endregion
 }

@@ -11,5 +11,5 @@ public partial class AddEditPropertyPage : ContentPage
         BindingContext = vm;
 
     }
-    
+
 }

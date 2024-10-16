@@ -18,6 +18,11 @@
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="#E8E8E8">
+            <!-- Toggle Button for Flashlight -->
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Padding="10">
+                <Label Text="Flashlight" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding IsFlashlightOn}" />
+            </StackLayout>
             <!-- Battery Warning Label -->
             <Label
                 x:Name="BatteryWarningLabel"
