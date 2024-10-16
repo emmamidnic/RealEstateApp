@@ -162,6 +162,9 @@ public class AddEditPropertyPageViewModel : BaseViewModel
 
     private Command updateLocationCommand;
     public ICommand UpdateLocationCommand => updateLocationCommand ??= new Command(async () => await UpdateLocation());
+
+    public bool IsGeoCodingEnabled { get; internal set; }
+
     public async Task UpdateLocation()
     {
         try
