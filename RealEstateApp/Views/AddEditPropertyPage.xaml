@@ -23,7 +23,6 @@
                 Text="{Binding StatusMessage}" />
             <ScrollView VerticalOptions="FillAndExpand">
                 <StackLayout Padding="15" Spacing="20">
-
                     <Label FontSize="Medium">
                         <Label.FormattedText>
                             <FormattedString>

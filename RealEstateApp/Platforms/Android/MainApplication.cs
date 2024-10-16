@@ -6,6 +6,7 @@ using Android.Runtime;
 [assembly: UsesFeature("android.hardware.location.gps", Required = false)]
 [assembly: UsesFeature("android.hardware.location.network", Required = false)]
 [assembly: UsesPermission(Android.Manifest.Permission.Vibrate)]
+[assembly: UsesPermission(Android.Manifest.Permission.BatteryStats)]
 
 namespace RealEstateApp;
 

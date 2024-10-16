@@ -12,14 +12,25 @@ namespace RealEstateApp.ViewModels;
 public class AddEditPropertyPageViewModel : BaseViewModel
 {
     readonly IPropertyService service;
+    readonly IBattery battery;
 
-    public AddEditPropertyPageViewModel(IPropertyService service, IConnectivity connectivity)
+    public AddEditPropertyPageViewModel(IPropertyService service, IConnectivity connectivity, IBattery battery)
     {
         this.service = service;
         Agents = new ObservableCollection<Agent>(service.GetAgents());
 
         this.connectivity = connectivity;
         connectivity.ConnectivityChanged += OnConnectivityChanged;
+
+        #region OPGAVE 3.7
+        this.battery = battery;
+
+        // Subscribe to battery level change event
+        battery.BatteryInfoChanged += OnBatteryInfoChanged;
+
+        // Check battery level initially
+        CheckBatteryLevel();
+        #endregion
     }
 
     public bool IsOnline => connectivity.NetworkAccess == NetworkAccess.Internet;
@@ -283,6 +294,24 @@ public class AddEditPropertyPageViewModel : BaseViewModel
             cancellationTokenSource.Cancel();
         }
     }
+
+    #endregion
+
+    #region OPGAVE 3.7
+
+    private void OnBatteryInfoChanged(object sender, BatteryInfoChangedEventArgs e)
+    {
+        CheckBatteryLevel();
+    }
+
+    private async void CheckBatteryLevel()
+    {
+        if (battery.State == BatteryState.NotCharging && battery.ChargeLevel < 0.2)
+        {
+            await Shell.Current.DisplayAlert("Low Battery", "Your battery is below 20%. Please charge your device.", "OK");
+        }
+    }
+
 
     #endregion
 }
