@@ -1,6 +1,8 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 using System.Net;
 using System.Windows.Input;
 namespace RealEstateApp.ViewModels;
@@ -220,4 +222,67 @@ public class AddEditPropertyPageViewModel : BaseViewModel
         if (_isCheckingLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)
             _cancelTokenSource.Cancel();
     }
+
+
+    #region OPGAVE 3.6
+
+    private bool isSpeechPlaying;
+    private CancellationTokenSource cancellationTokenSource;
+
+    private Command textToSpeechCommand;
+    private Command cancelSpeechCommand;
+    public ICommand TextToSpeechCommand => textToSpeechCommand ??= new Command(ExecuteTextToSpeech);
+    public ICommand CancelSpeechCommand => cancelSpeechCommand ??= new Command(ExecuteCancelSpeech, CanExecuteCancelSpeech);
+
+
+    public bool IsSpeechPlaying
+    {
+        get => isSpeechPlaying;
+        set
+        {
+            isSpeechPlaying = value;
+            OnPropertyChanged();
+            // Update CancelSpeechCommand execution status
+            ((Command)CancelSpeechCommand).ChangeCanExecute();
+        }
+    }
+
+    private async void ExecuteTextToSpeech()
+    {
+        var descriptionText = Property.Description;
+
+        if (!string.IsNullOrWhiteSpace(descriptionText))
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            IsSpeechPlaying = true;
+
+            try
+            {
+                await TextToSpeech.SpeakAsync(descriptionText, cancelToken: cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle when speech is cancelled
+            }
+            finally
+            {
+                IsSpeechPlaying = false;
+            }
+        }
+    }
+
+    private bool CanExecuteCancelSpeech()
+    {
+        return cancellationTokenSource != null && !cancellationTokenSource.IsCancellationRequested;
+    }
+
+    private void ExecuteCancelSpeech()
+    {
+        if (cancellationTokenSource != null && !cancellationTokenSource.IsCancellationRequested)
+        {
+            cancellationTokenSource.Cancel();
+        }
+    }
+
+    #endregion
 }

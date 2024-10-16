@@ -33,7 +33,10 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Entry x:Name="addressEntry" FontSize="Medium" Text="{Binding Property.Address}" />
+                    <Entry
+                        x:Name="addressEntry"
+                        FontSize="Medium"
+                        Text="{Binding Property.Address}" />
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>
@@ -58,7 +61,7 @@
                         <Button
                             Grid.Column="3"
                             BackgroundColor="Transparent"
-                            Command="{Binding UpdateLocationCommand}" 
+                            Command="{Binding UpdateLocationCommand}"
                             HeightRequest="50"
                             HorizontalOptions="Center"
                             ImageSource="home.png"
@@ -137,6 +140,38 @@
                         Keyboard="Numeric"
                         ReturnType="Next"
                         Text="{Binding Property.LandSize, Converter={converters:NullableIntConverter}}" />
+
+
+                    <Label FontSize="Medium">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontFamily="FA-solid" Text="{Static fa:IconFont.FileAlt}" />
+                                <Span Text=" " />
+                                <Span Text="Description" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    
+                    <!--PLAY BUTTON-->
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding TextToSpeechCommand}"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        ImageSource="play.png"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
+                    
+                    <!--CANCEL BUTTON-->
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding CancelSpeechCommand}"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        ImageSource="cancel.png"
+                        IsVisible="{Binding IsSpeechPlaying}"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
 
                     <Label FontSize="Medium">
                         <Label.FormattedText>

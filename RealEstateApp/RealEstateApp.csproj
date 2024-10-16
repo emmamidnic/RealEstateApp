@@ -54,8 +54,10 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
+	  <None Remove="Resources\Images\cancel.png" />
 	  <None Remove="Resources\Images\fa_sort_amount_asc.png" />
 	  <None Remove="Resources\Images\home.png" />
+	  <None Remove="Resources\Images\play.png" />
 	  <None Remove="Resources\Images\thumbtack.png" />
 	</ItemGroup>
 
