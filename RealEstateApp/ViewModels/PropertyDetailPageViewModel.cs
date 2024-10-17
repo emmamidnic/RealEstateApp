@@ -17,6 +17,9 @@ public class PropertyDetailPageViewModel : BaseViewModel
     Property property;
     public Property Property { get => property; set { SetProperty(ref property, value); } }
 
+    Vendor vendor;
+    public Vendor Vendor { get => vendor; set { SetProperty(ref vendor, value); } }
+
 
     Agent agent;
     public Agent Agent { get => agent; set { SetProperty(ref agent, value); } }
