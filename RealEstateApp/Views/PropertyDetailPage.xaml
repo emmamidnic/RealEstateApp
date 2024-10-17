@@ -15,7 +15,7 @@
     <ScrollView>
         <Grid
             Padding="15"
-            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
             RowSpacing="10">
             <Image
                 Grid.Row="0"
@@ -89,30 +89,32 @@
                 Margin="0,0,0,20"
                 FontSize="14"
                 Text="Vendor:" />
+            <VerticalStackLayout Grid.Row="8">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding VendorActionSheetCommand}" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Label
+                    Margin="0,0,0,0"
+                    FontSize="14"
+                    Text="{Binding Property.Vendor.FullName}" />
+                <Label
+                    Margin="0,0,0,0"
+                    FontSize="14"
+                    Text="{Binding Property.Vendor.Email}"
+                    TextColor="Blue" />
+                <Label
+                    Margin="0,0,0,20"
+                    FontSize="14"
+                    Text="{Binding Property.Vendor.Phone}"
+                    TextColor="Blue" />
 
-            <Label
-                Grid.Row="8"
-                Margin="0,0,0,0"
-                FontSize="14"
-                Text="{Binding Property.Vendor.FullName}" />
+            </VerticalStackLayout>
             <Label
                 Grid.Row="9"
-                Margin="0,0,0,0"
-                FontSize="14"
-                Text="{Binding Property.Vendor.Email}"
-                TextColor="Blue" />
-            <Label
-                Grid.Row="10"
-                Margin="0,0,0,20"
-                FontSize="14"
-                Text="{Binding Property.Vendor.Phone}"
-                TextColor="Blue" />
-            <Label
-                Grid.Row="11"
                 FontAttributes="Bold"
                 FontSize="14"
                 Text="Listed by:" />
-            <Grid Grid.Row="12" ColumnDefinitions="auto, *">
+            <Grid Grid.Row="10" ColumnDefinitions="auto, *">
                 <Image
                     Grid.Column="0"
                     Source="{Binding Agent.ImageUrl}"

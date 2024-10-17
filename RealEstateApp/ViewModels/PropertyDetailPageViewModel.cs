@@ -1,4 +1,5 @@
-﻿using RealEstateApp.Models;
+﻿using Android.Telecom;
+using RealEstateApp.Models;
 using RealEstateApp.Services;
 using RealEstateApp.Views;
 using System.Windows.Input;
@@ -49,4 +50,35 @@ public class PropertyDetailPageViewModel : BaseViewModel
             {"MyProperty", Property}
         });
     }
+
+    #region Opgave 5.1
+    private Command vendorActionSheetCommand;
+    public Command VendorActionSheetCommand => vendorActionSheetCommand ??= new Command(async () => await VendorActionSheet());
+    public async Task VendorActionSheet()
+    {
+        string chosen = await Shell.Current.DisplayActionSheet("Choose one: ", "Cancel", null, "Call", "SMS", "Email");
+        if (chosen == "Call")
+        {
+            PhoneDialer.Open(Property.Vendor.Phone);
+        }
+        else if (chosen == "SMS")
+        {
+            await Sms.ComposeAsync(new SmsMessage()
+            {
+                Recipients = new List<string>
+                {
+                    Property.Vendor.Phone
+                },
+            });
+        }
+        else if (chosen == "Email")
+        {
+            await Email.ComposeAsync(new EmailMessage()
+            {
+                To = new List<string> { Property.Vendor.Email },
+                Subject = Property.Address
+            });
+        }
+    }
+    #endregion
 }
