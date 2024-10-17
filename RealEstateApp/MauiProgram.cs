@@ -33,6 +33,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IBattery>(Battery.Default);
         builder.Services.AddTransient<CompassPage>();
         builder.Services.AddTransient<CompassViewModel>();
+        builder.Services.AddTransient<HeightCalculatorPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

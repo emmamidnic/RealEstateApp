@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="RealEstateApp.Views.HeightCalculatorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:RealEstateApp.Models"
+    xmlns:views="clr-namespace:RealEstateApp.ViewModels"
+    xmlns:converters="clr-namespace:RealEstateApp.Converters"
+    Title="HeightCalculatorPage"
+    x:DataType="views:HeightCalculatorPageViewModel">
+    <Grid
+        Padding="20"
+        HorizontalOptions="FillAndExpand"
+        RowSpacing="10"
+        VerticalOptions="FillAndExpand">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!--  Row for Altitude  -->
+            <RowDefinition Height="Auto" />
+            <!--  Row for Measurement Label  -->
+            <RowDefinition Height="Auto" />
+            <!--  Row for Save Button  -->
+            <RowDefinition Height="*" />
+            <!--  Space between  -->
+            <RowDefinition Height="Auto" />
+            <!--  Row for Pressure  -->
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            FontSize="Small"
+            HorizontalOptions="Center"
+            Text="{Binding CurrentAltitude, StringFormat='Current Altitude: {0:F2} m'}"
+            VerticalOptions="Start" />
+
+        <Entry
+            Grid.Row="1"
+            FontSize="Small"
+            HorizontalOptions="FillAndExpand"
+            Text="{Binding MeasurementLabel}" />
+
+        <Button
+            Grid.Row="2"
+            Command="{Binding SaveButtonCommand}"
+            Text="Save" />
+        <ListView
+            Grid.Row="3"
+            ItemsSource="{Binding Measurements}"
+            VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:BarometerMeasurement">
+                    <ViewCell>
+                        <StackLayout
+                            Padding="10"
+                            Orientation="Horizontal"
+                            Spacing="5">
+                            <Label HorizontalOptions="Start" Text="{Binding Label, StringFormat='{0}: '}" />
+                            <Label HorizontalOptions="Center" Text="{Binding Altitude, StringFormat='{0:F2} m '}" />
+                            <Label 
+                        HorizontalOptions="End" 
+                        Text="{Binding HeightChange, StringFormat='({0:F2} m change)'}" 
+                        IsVisible="{Binding Source={RelativeSource AncestorType={x:Type views:HeightCalculatorPageViewModel}}, Path=NoShowDifference, Converter={converters:InverseBoolConverter}}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label
+            Grid.Row="4"
+            FontSize="Small"
+            HorizontalOptions="Center"
+            Text="{Binding CurrentPressure, StringFormat='Current Pressure: {0} hPa'}"
+            VerticalOptions="End" />
+    </Grid>
+</ContentPage>

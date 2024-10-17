@@ -2,10 +2,6 @@
 using RealEstateApp.Services;
 using RealEstateApp.Views;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
-using System.Net;
-using System.Text.Json;
 using System.Windows.Input;
 namespace RealEstateApp.ViewModels;
 
@@ -108,9 +104,9 @@ public class AddEditPropertyPageViewModel : BaseViewModel
     {
         if (IsValid() == false)
         {
-           StatusMessage = "Please fill in all required fields";
-           StatusColor = Colors.Red;
-           Vibration.Vibrate(TimeSpan.FromSeconds(3));
+            StatusMessage = "Please fill in all required fields";
+            StatusColor = Colors.Red;
+            Vibration.Vibrate(TimeSpan.FromSeconds(3));
         }
         else
         {
@@ -194,7 +190,7 @@ public class AddEditPropertyPageViewModel : BaseViewModel
 
             _property.Address = address;
             OnPropertyChanged(nameof(Property));
-            
+
         }
         else
         {
@@ -212,7 +208,7 @@ public class AddEditPropertyPageViewModel : BaseViewModel
     {
         try
         {
-            if (Property.Address is null) 
+            if (Property.Address is null)
             {
                 await Application.Current.MainPage.DisplayAlert("Error!", "Please fill out address!", "Cancel");
             }
